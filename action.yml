@@ -6,6 +6,12 @@ inputs:
   jumpstarter-ref:
     description: 'jumpstarter-dev/jumpstarter git ref'
     required: true
+  controller-url:
+    description: 'jumpstarter-dev/jumpstarter-controller git'
+    required: true
+  jumpstarter-url:
+    description: 'jumpstarter-dev/jumpstarter git'
+    required: true
 runs:
   using: "composite"
   steps:
@@ -23,13 +29,13 @@ runs:
     - name: Checkout jumpstarter controller
       uses: actions/checkout@v4
       with:
-        repository: jumpstarter-dev/jumpstarter-controller
+        repository: ${{ inputs.controller-url }}
         ref: ${{ inputs.controller-ref }}
         path: controller
     - name: Checkout jumpstarter
       uses: actions/checkout@v4
       with:
-        repository: jumpstarter-dev/jumpstarter
+        repository: ${{ inputs.jumpstarter-url }}
         ref: ${{ inputs.jumpstarter-ref }}
         path: jumpstarter
     - name: Deploy dex
