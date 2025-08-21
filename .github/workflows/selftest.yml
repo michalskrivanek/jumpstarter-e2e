@@ -1,6 +1,19 @@
 name: selftest
 on:
-  - push
+  workflow_dispatch:
+    inputs:
+      controller:
+        required: true
+        default: 'main'
+      jumpstarter:
+        required: true
+        default: 'main'
+      controller_url:
+        required: true
+        default: 'jumpstarter-dev/jumpstarter-controller'
+      jumpstarter_url:
+        required: true
+        default: 'jumpstarter-dev/jumpstarter'
 jobs:
   test:
     strategy:
@@ -15,5 +28,7 @@ jobs:
           path: e2e
       - uses: ./e2e
         with:
-          controller-ref: main
-          jumpstarter-ref: main
+          controller-url:  ${{ github.event.inputs.controller_url }}
+          jumpstarter-url:  ${{ github.event.inputs.jumpstarter_url }}
+          controller-ref:  ${{ github.event.inputs.controller }}
+          jumpstarter-ref:  ${{ github.event.inputs.jumpstarter }}
